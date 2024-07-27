@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export function Home() {
   return (
@@ -23,7 +22,7 @@ export function Home() {
           <Link href="#" className="hover:underline" prefetch={false}>
             Contact
           </Link>
-          <Button variant="secondary">Sign In</Button>
+          {/* <Button variant="secondary">Sign In</Button> */}
           <Button variant="secondary">Sign Up</Button>
         </nav>
       </header>
@@ -39,18 +38,11 @@ export function Home() {
                   Search through thousands of job listings and find the perfect
                   fit for your skills and experience.
                 </p>
-                <div className="flex flex-col gap-2 sm:flex-row">
-                  <Input
-                    type="text"
-                    placeholder="Job title, keywords"
-                    className="flex-1"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Location"
-                    className="flex-1"
-                  />
-                  <Button className="flex-none border">Search</Button>
+                <div className="flex flex-col gap-2  sm:flex-row">
+                  <Link href="/browse" className="hover:underline">
+                    <Button variant={"secondary"}>Browse Jobs</Button>
+                  </Link>
+                  <Button variant={"default"}>Learn More</Button>
                 </div>
               </div>
               <div className="flex justify-center items-center">
@@ -67,7 +59,7 @@ export function Home() {
         </section>
         <section className="bg-muted py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex justify-center">
                 <img
                   src="/placeholder.svg"
@@ -96,7 +88,7 @@ export function Home() {
         </section>
         <section className="bg-background py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                   Candidate Shortlisting
@@ -125,7 +117,7 @@ export function Home() {
         </section>
         <section className="bg-muted py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex justify-center">
                 <img
                   src="/placeholder.svg"
