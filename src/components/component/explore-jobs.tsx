@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,6 +9,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
   Pagination,
@@ -17,8 +19,56 @@ import {
   PaginationLink,
   PaginationNext,
 } from "@/components/ui/pagination";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function ExploreJobs() {
+  const router = useRouter();
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [user, setUser] = useState<any>({});
+  // const [loading, setLoading] = useState(true);
+  // const [page, setPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
+
+  const fetchJobs = async () => {
+    const res = await axios.get("http://localhost:8080/api/jobs", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (
+      res.data.data === null ||
+      res.data.data.length === 0 ||
+      res.status === 401 ||
+      res.data.data === undefined
+    ) {
+      router.push("/login");
+    }
+    setJobs(res.data.data);
+  };
+
+  const fetchUser = async () => {
+    const res = await axios.get(
+      `http://localhost:8080/api/auth/${localStorage.getItem("id")}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (res.status === 401) {
+      router.push("/login");
+    }
+    setUser(res.data.user);
+    console.log(res.data.user);
+  };
+
+  useEffect(() => {
+    fetchJobs();
+    fetchUser();
+  }, []);
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <div className="bg-muted/40 border-b p-4 md:w-64 md:border-r md:p-6 md:fixed md:inset-0 md:h-full md:overflow-auto">
@@ -78,178 +128,38 @@ export function ExploreJobs() {
         </header>
         <main className="mt-0 p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Software Engineer</CardTitle>
-                <CardDescription>Acme Inc.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are looking for an experienced software engineer to join
-                  our team. You will be responsible for developing and
-                  maintaining our web application.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex flex-col gap-2 items-center">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 2 days ago
-                  </span>
-                  <div className="flex items-center gap-2 w-full">
-                    <Button variant="outline" size="sm">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
+            {jobs.map((job) => (
+              <Card>
+                <CardHeader>
+                  <CardTitle>{job.title}</CardTitle>
+                  <CardDescription>{job.company}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>{job.description}</p>
+                </CardContent>
+                <CardFooter>
+                  <div className="flex flex-col gap-2 items-center">
+                    <span className="text-sm text-muted-foreground">
+                      Posted {formatDistanceToNow(new Date(job.createdAt))} ago
+                    </span>
+                    <div className="flex items-center gap-2 w-full">
+                      <Button variant="outline" size="sm">
+                        Apply
+                      </Button>
+                      {user.role === "COMPANY" || user.role === "ADMIN" ? (
+                        <Button variant="destructive" size="sm">
+                          Delete
+                        </Button>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Marketing Manager</CardTitle>
-                <CardDescription>Globex Corporation</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are seeking a talented marketing manager to lead our
-                  digital marketing efforts. You will be responsible for
-                  developing and executing our marketing strategy.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 1 week ago
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Product Designer</CardTitle>
-                <CardDescription>Stark Industries</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are looking for a creative and experienced product designer
-                  to join our team. You will be responsible for designing the
-                  user interface and user experience of our products.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 3 days ago
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Data Analyst</CardTitle>
-                <CardDescription>Stark Industries</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are seeking a data analyst to join our team. You will be
-                  responsible for analyzing and interpreting data to help drive
-                  business decisions.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 1 month ago
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Sales Representative</CardTitle>
-                <CardDescription>Globex Corporation</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are looking for an experienced sales representative to join
-                  our team. You will be responsible for generating new leads and
-                  closing sales.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 2 weeks ago
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Content Writer</CardTitle>
-                <CardDescription>Acme Inc.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We are seeking a talented content writer to join our team. You
-                  will be responsible for creating engaging and informative
-                  content for our website and social media channels.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Posted 5 days ago
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Apply
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </main>
         <div className="flex justify-center mt-6 mb-8">
-          <Pagination>
+          {/* <Pagination>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious href="#" />
@@ -269,7 +179,7 @@ export function ExploreJobs() {
                 <PaginationNext href="#" />
               </PaginationItem>
             </PaginationContent>
-          </Pagination>
+          </Pagination> */}
         </div>
       </div>
     </div>
