@@ -30,12 +30,8 @@ export function Login() {
       password: input.password,
     });
     const data = res.data;
-    console.log(data);
-    console.log(data.token);
-    console.log(data.user.id);
     localStorage.setItem("token", data.token);
     localStorage.setItem("id", JSON.stringify(data.user.id));
-    console.log(res);
     if (res.status === 200) {
       toast({
         title: "Logged in successfully",

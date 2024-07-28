@@ -31,7 +31,6 @@ export function Register() {
       email: input.email,
       password: input.password,
     });
-    console.log(res);
     if (res.status === 201) {
       toast({
         title: "Registered successfully",

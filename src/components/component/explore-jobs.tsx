@@ -22,14 +22,13 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { fetchUser } from "@/lib/utils";
 
 export function ExploreJobs() {
   const router = useRouter();
   const [jobs, setJobs] = useState<any[]>([]);
-  const [user, setUser] = useState<any>({});
-  // const [loading, setLoading] = useState(true);
-  // const [page, setPage] = useState(1);
-  // const [totalPages, setTotalPages] = useState(1);
+  const [user, setUser] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   const fetchJobs = async () => {
     const res = await axios.get("http://localhost:8080/api/jobs", {
@@ -38,83 +37,30 @@ export function ExploreJobs() {
       },
     });
 
-    if (
-      res.data.data === null ||
-      res.data.data.length === 0 ||
-      res.status === 401 ||
-      res.data.data === undefined
-    ) {
+    if (res.status === 401 || res.data.data === undefined) {
       router.push("/login");
     }
     setJobs(res.data.data);
   };
-
-  const fetchUser = async () => {
-    const res = await axios.get(
-      `http://localhost:8080/api/auth/${localStorage.getItem("id")}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-    if (res.status === 401) {
-      router.push("/login");
+  // Fetch user
+  const getUser = async () => {
+    setLoading(true);
+    const res = await fetchUser();
+    if (res && res.role && res.name) {
+      setUser(res);
+      console.log(user);
+    } else {
+      console.log("User role is undefined");
     }
-    setUser(res.data.user);
-    console.log(res.data.user);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchJobs();
-    fetchUser();
+    getUser();
   }, []);
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      <div className="bg-muted/40 border-b p-4 md:w-64 md:border-r md:p-6 md:fixed md:inset-0 md:h-full md:overflow-auto">
-        <nav className="flex flex-col gap-4">
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-primary"
-            prefetch={false}
-          >
-            <BriefcaseIcon className="h-5 w-5" />
-            <span className="font-semibold">Jobs</span>
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            prefetch={false}
-          >
-            <UsersIcon className="h-5 w-5" />
-            <span>Candidates</span>
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            prefetch={false}
-          >
-            <BriefcaseIcon className="h-5 w-5" />
-            <span>Employers</span>
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            prefetch={false}
-          >
-            <DollarSignIcon className="h-5 w-5" />
-            <span>Pricing</span>
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            prefetch={false}
-          >
-            <MailIcon className="h-5 w-5" />
-            <span>Contact</span>
-          </Link>
-        </nav>
-      </div>
       <div className="flex-1 md:ml-64">
         <header className="bg-background border-b p-4 flex items-center gap-4">
           <div className="relative flex-1">
@@ -132,10 +78,10 @@ export function ExploreJobs() {
               <Card>
                 <CardHeader>
                   <CardTitle>{job.title}</CardTitle>
-                  <CardDescription>{job.company}</CardDescription>
+                  <CardDescription>{user?.name}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p>{job.description}</p>
+                  <p className="line-clamp-3">{job.description}</p>
                 </CardContent>
                 <CardFooter>
                   <div className="flex flex-col gap-2 items-center">
@@ -143,10 +89,15 @@ export function ExploreJobs() {
                       Posted {formatDistanceToNow(new Date(job.createdAt))} ago
                     </span>
                     <div className="flex items-center gap-2 w-full">
-                      <Button variant="outline" size="sm">
-                        Apply
-                      </Button>
-                      {user.role === "COMPANY" || user.role === "ADMIN" ? (
+                      <Link
+                        href={`/application/${job.id}`}
+                        className="text-sm "
+                      >
+                        <Button variant="outline" size="sm">
+                          Apply
+                        </Button>
+                      </Link>
+                      {user?.role === "COMPANY" || user?.role === "ADMIN" ? (
                         <Button variant="destructive" size="sm">
                           Delete
                         </Button>
