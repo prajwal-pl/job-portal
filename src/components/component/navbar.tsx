@@ -6,6 +6,7 @@ import {
   DollarSignIcon,
   MailIcon,
   Plus,
+  User2Icon,
   UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -75,20 +76,12 @@ const Navbar = (props: Props) => {
           <span>Applications</span>
         </Link>
         <Link
-          href="/login"
+          href="/account"
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
           prefetch={false}
         >
-          <DollarSignIcon className="h-5 w-5" />
-          <span>Login</span>
-        </Link>
-        <Link
-          href="#"
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-          prefetch={false}
-        >
-          <MailIcon className="h-5 w-5" />
-          <span>Contact</span>
+          <User2Icon className="h-5 w-5" />
+          <span>Account</span>
         </Link>
       </nav>
     </div>

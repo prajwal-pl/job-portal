@@ -31,16 +31,24 @@ export function ExploreJobs() {
   const [loading, setLoading] = useState(false);
 
   const fetchJobs = async () => {
-    const res = await axios.get("http://localhost:8080/api/jobs", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (res.status === 401 || res.data.data === undefined) {
+    try {
+      const res = await axios.get("http://localhost:8080/api/jobs", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (axios.isAxiosError(res)) {
+        console.log(res?.response?.data?.message);
+        return router.push("/login");
+      }
+      if (res.status === 401 || res.data.data === undefined) {
+        router.push("/login");
+      }
+      setJobs(res.data.data);
+    } catch (err) {
+      console.log(err);
       router.push("/login");
     }
-    setJobs(res.data.data);
   };
   // Fetch user
   const getUser = async () => {

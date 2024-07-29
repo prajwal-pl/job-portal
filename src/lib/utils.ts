@@ -8,16 +8,27 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const fetchUser = async () => {
-  const res = await axios.get(
-    `http://localhost:8080/api/auth/${localStorage.getItem("id")}`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/api/auth/${localStorage.getItem("id")}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (axios.isAxiosError(res)) {
+      console.log(res?.response?.data?.message);
+      return redirect("/login");
     }
-  );
-  if (res.status === 401) {
-    redirect("/login");
+    if (!res.data.user) {
+      redirect("/login");
+    }
+    if (res.status === 401) {
+      redirect("/login");
+    }
+    return res.data.user;
+  } catch (err) {
+    console.log(err);
   }
-  return res.data.user;
 };
