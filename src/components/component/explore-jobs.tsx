@@ -98,9 +98,14 @@ export function ExploreJobs() {
                         </Button>
                       </Link>
                       {user?.role === "COMPANY" || user?.role === "ADMIN" ? (
-                        <Button variant="destructive" size="sm">
-                          Delete
-                        </Button>
+                        <>
+                          <Button variant="destructive" size="sm">
+                            Delete
+                          </Button>
+                          <Button variant="default" size="sm">
+                            Edit
+                          </Button>
+                        </>
                       ) : null}
                     </div>
                   </div>
