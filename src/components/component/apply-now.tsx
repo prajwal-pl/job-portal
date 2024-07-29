@@ -56,7 +56,7 @@ export function ApplyNow({ job, user }: { job: any; user: any }) {
       <div className="space-y-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Software Engineer
+            {job?.title}
           </h1>
           <p className="mt-2 text-muted-foreground">{user?.name}</p>
         </div>

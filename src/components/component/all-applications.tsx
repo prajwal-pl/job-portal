@@ -11,18 +11,35 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
+import { useToast } from "../ui/use-toast";
 
 export function AllApplications() {
+  const { toast } = useToast();
   const [applications, setApplications] = useState<any[]>([]);
+  const userId = localStorage.getItem("id");
   const getApplications = async () => {
-    const res = await axios.get("http://localhost:8080/api/applications", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    console.log(res.data.applications);
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/applications/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (axios.isAxiosError(res)) {
+        console.log(res?.response?.data?.message);
+        toast({
+          title: "No applications found",
+          description: "Please try again later",
+        });
+      }
+      console.log(res.data.applications);
 
-    setApplications(res.data.applications);
+      setApplications(res.data.applications);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     getApplications();

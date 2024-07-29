@@ -22,10 +22,12 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { fetchUser } from "@/lib/utils";
+import { deleteJob, fetchUser } from "@/lib/utils";
+import { useToast } from "../ui/use-toast";
 
 export function ExploreJobs() {
   const router = useRouter();
+  const { toast } = useToast();
   const [jobs, setJobs] = useState<any[]>([]);
   const [user, setUser] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ export function ExploreJobs() {
   const getUser = async () => {
     setLoading(true);
     const res = await fetchUser();
-    if (res && res.role && res.name) {
+    if (res) {
       setUser(res);
       console.log(user);
     } else {
@@ -62,6 +64,52 @@ export function ExploreJobs() {
     }
     setLoading(false);
   };
+
+  const handleDelete = async ({ id }: any) => {
+    console.log(id);
+    // try {
+    //   const res = await axios.delete(
+    //     `http://localhost:8080/api/jobs/delete/${id}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //       },
+    //     }
+    //   );
+    //   console.log(res);
+    //   if (axios.isAxiosError(res)) {
+    //     console.log(res?.response?.data?.message);
+    //   }
+    //   if (res.status === 200) {
+    //     toast({
+    //       title: "Job deleted successfully",
+    //       description: "You have been deleted successfully",
+    //     });
+    //     router.push("/browse");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
+  // const handleEdit = async ({ id }: any) => {
+  //   try {
+  //     const res = await axios.put(
+  //       `http://localhost:8080/api/jobs/update/${id}`,
+  //       {
+  //         title: "Software Engineer",
+  //         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //         salary: 50000,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(res);
+  //     if (axios.isAxiosError(res)) {
+  //       console.log(res?.response?.data?.message);
 
   useEffect(() => {
     fetchJobs();
@@ -83,7 +131,7 @@ export function ExploreJobs() {
         <main className="mt-0 p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.map((job) => (
-              <Card>
+              <Card key={job?.id}>
                 <CardHeader>
                   <CardTitle>{job.title}</CardTitle>
                   <CardDescription>{user?.name}</CardDescription>
@@ -105,9 +153,14 @@ export function ExploreJobs() {
                           Apply
                         </Button>
                       </Link>
-                      {user?.role === "COMPANY" || user?.role === "ADMIN" ? (
+                      {(user?.role === "COMPANY" || user?.role === "ADMIN") &&
+                      job.userId === user?.id ? (
                         <>
-                          <Button variant="destructive" size="sm">
+                          <Button
+                            onClick={() => deleteJob(job?.id)}
+                            variant="destructive"
+                            size="sm"
+                          >
                             Delete
                           </Button>
                           <Button variant="default" size="sm">

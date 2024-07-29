@@ -38,7 +38,7 @@ export function Login() {
         title: "Logged in successfully",
         description: "You can now access your account",
       });
-      router.push("/browse");
+      router.push("/role");
     }
   };
   return (
