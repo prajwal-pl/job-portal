@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchUser } from "@/lib/utils";
 import clsx from "clsx";
@@ -24,16 +24,50 @@ import {
 import { AccountSettings } from "./account-settings";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
+import axios from "axios";
+import { useToast } from "../ui/use-toast";
 
 export function Sidebar() {
+  const { toast } = useToast();
+  const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState<any>();
   const getUser = async () => {
     const res = await fetchUser();
     if (res && res.role) {
-      setUser(res.role);
+      setUser(res);
     } else {
       console.log("User role is undefined");
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(res);
+      if (axios.isAxiosError(res)) {
+        console.log(res?.response?.data?.message);
+      }
+      if (res.status === 200) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("id");
+        toast({
+          title: "Logged out successfully",
+          description: "You have been logged out successfully",
+          variant: "destructive",
+        });
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -68,7 +102,7 @@ export function Sidebar() {
           <SearchIcon className="w-5 h-5" />
           <span>Jobs</span>
         </Link>
-        {user === "ADMIN" || user === "COMPANY" ? (
+        {user?.role === "ADMIN" || user?.role === "COMPANY" ? (
           <Link
             href="/new"
             className={clsx(
@@ -119,21 +153,21 @@ export function Sidebar() {
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1">
-                  <div className="font-medium">John Doe</div>
+                  <div className="font-medium">{user?.name}</div>
                   <div className="text-sm text-muted-foreground">
-                    john@example.com
+                    {user?.email}
                   </div>
                 </div>
               </div>
               <Separator />
               <div className="flex items-center justify-between">
                 <div className="text-sm text-muted-foreground">Role:</div>
-                <div className="text-sm font-medium">User</div>
+                <div className="text-sm font-medium">{user?.role}</div>
               </div>
               <Button
                 variant="destructive"
                 className="w-full"
-                onClick={() => {}}
+                onClick={handleClick}
               >
                 Logout
               </Button>
@@ -176,7 +210,7 @@ export function Sidebar() {
                   <span>Jobs</span>
                 </Link>
               </DropdownMenuItem>
-              {user === "ADMIN" || user === "COMPANY" ? (
+              {user?.role === "ADMIN" || user?.role === "COMPANY" ? (
                 <DropdownMenuItem>
                   <Link
                     href="/new"
