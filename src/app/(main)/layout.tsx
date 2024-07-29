@@ -1,4 +1,5 @@
 import Navbar from "@/components/component/navbar";
+import { Sidebar } from "@/components/component/sidebar";
 import React from "react";
 
 type Props = {
@@ -7,8 +8,8 @@ type Props = {
 
 const MainLayout = ({ children }: Props) => {
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center h-screen">
-      <Navbar />
+    <div className="flex items-center flex-col md:flex-row justify-center h-screen">
+      <Sidebar />
       {children}
     </div>
   );

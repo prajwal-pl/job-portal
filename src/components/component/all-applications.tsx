@@ -28,7 +28,7 @@ export function AllApplications() {
     getApplications();
   }, []);
   return (
-    <section className="w-full bg-background md:ml-64 py-12 md:py-16 lg:py-20">
+    <section className="w-full bg-background md:ml-20 py-12 md:py-16 lg:py-20 min-h-[100dvh]">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">

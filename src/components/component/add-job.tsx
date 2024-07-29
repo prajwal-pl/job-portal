@@ -66,7 +66,7 @@ export function AddJob() {
     getUser();
   }, []);
   return (
-    <div className="flex justify-center items-center h-screen bg-background">
+    <div className="flex justify-center w-full items-center h-screen bg-background">
       <Card className="w-full max-w-5xl p-6 sm:p-8 md:p-10">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Add New Job</CardTitle>

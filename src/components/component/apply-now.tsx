@@ -52,7 +52,7 @@ export function ApplyNow({ job, user }: { job: any; user: any }) {
   };
 
   return (
-    <div className="container mx-auto mt-12 max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="container mb-12 mx-auto max-h-[100dvh] max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="space-y-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

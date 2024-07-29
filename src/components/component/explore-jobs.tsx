@@ -68,8 +68,8 @@ export function ExploreJobs() {
     getUser();
   }, []);
   return (
-    <div className="flex flex-col min-h-[100dvh]">
-      <div className="flex-1 md:ml-64">
+    <div className="flex flex-col min-h-[100dvh] bg-background mt-4 md:mt-0">
+      <div className="flex-1 md:ml-20">
         <header className="bg-background border-b p-4 flex items-center gap-4">
           <div className="relative flex-1">
             <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
