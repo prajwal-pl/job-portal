@@ -3,6 +3,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { CalendarCheck, CalendarHeart } from "lucide-react";
 
 export function ApplicantDetails({ id }: { id: string }) {
   const [application, setApplication] = useState<any>({});
@@ -45,7 +47,7 @@ export function ApplicantDetails({ id }: { id: string }) {
     getApplication();
   }, []);
   return (
-    <div className="w-full max-w-3xl mx-auto p-6 md:p-10">
+    <div className="w-full max-w-3xl mx-auto p-6 md:p-10 max-h-screen">
       <div className="grid gap-8">
         <div className="flex items-center gap-6">
           <Avatar className="h-20 w-20">
@@ -82,6 +84,16 @@ export function ApplicantDetails({ id }: { id: string }) {
           >
             View Resume
           </Link>
+        </div>
+        <div className="flex gap-2">
+          <Button className="flex items-center gap-1">
+            <CalendarCheck className="w-5 h-5" />
+            <span>Schedule Interview</span>
+          </Button>
+          <Button variant={"destructive"} className="flex items-center gap-1">
+            <CalendarCheck className="w-5 h-5" />
+            <span>Reject Application</span>
+          </Button>
         </div>
       </div>
     </div>

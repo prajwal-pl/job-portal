@@ -1,4 +1,3 @@
-import Navbar from "@/components/component/navbar";
 import { Sidebar } from "@/components/component/sidebar";
 import React from "react";
 
@@ -8,7 +7,7 @@ type Props = {
 
 const MainLayout = ({ children }: Props) => {
   return (
-    <div className="flex items-center flex-col md:flex-row justify-center h-screen">
+    <div className="flex items-center  flex-col md:flex-row justify-center h-screen">
       <Sidebar />
       {children}
     </div>

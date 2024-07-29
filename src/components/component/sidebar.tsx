@@ -13,6 +13,18 @@ import { fetchUser } from "@/lib/utils";
 import clsx from "clsx";
 import { Briefcase, Plus } from "lucide-react";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { AccountSettings } from "./account-settings";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
+
 export function Sidebar() {
   const pathname = usePathname();
   const [user, setUser] = useState<any>();
@@ -28,7 +40,7 @@ export function Sidebar() {
     getUser();
   }, []);
   return (
-    <div className="flex h-screen w-full md:w-40 bg-background">
+    <div className="flex h-screen w-full md:w-52 bg-background">
       <nav className="hidden h-full border-r md:flex flex-col items-start gap-4 px-4 py-12">
         <Link
           href="/"
@@ -71,6 +83,7 @@ export function Sidebar() {
             <span>Add Job</span>
           </Link>
         ) : null}
+
         <Link
           href="/application"
           className={clsx(
@@ -84,16 +97,60 @@ export function Sidebar() {
           <Briefcase className="w-5 h-5" />
           <span>Applications</span>
         </Link>
-        <Link
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant={"ghost"}
+              className="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <SettingsIcon className="w-5 h-5" />
+              <span>Account</span>
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="w-[250px]">
+            <DialogHeader>
+              <DialogTitle>Account</DialogTitle>
+            </DialogHeader>
+            <DialogContent className="space-y-4">
+              <div className="flex items-center gap-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarImage src="/placeholder-user.jpg" />
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="font-medium">John Doe</div>
+                  <div className="text-sm text-muted-foreground">
+                    john@example.com
+                  </div>
+                </div>
+              </div>
+              <Separator />
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-muted-foreground">Role:</div>
+                <div className="text-sm font-medium">User</div>
+              </div>
+              <Button
+                variant="destructive"
+                className="w-full"
+                onClick={() => {}}
+              >
+                Logout
+              </Button>
+            </DialogContent>
+          </DialogContent>
+        </Dialog>
+
+        {/* <Link
           href="/account"
           className="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           prefetch={false}
         >
           <SettingsIcon className="w-5 h-5" />
           <span>Account</span>
-        </Link>
+        </Link> */}
       </nav>
-      <div className="flex h-full w-full mt-4 flex-col md:hidden">
+      <div className="flex h-full w-full mt-4 mb-16 flex-col md:hidden">
         <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b bg-background px-4">
           <Link href="/" className="flex items-center gap-3" prefetch={false}>
             <HomeIcon className="w-6 h-6" />
@@ -147,7 +204,7 @@ export function Sidebar() {
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link
-                  href="/account"
+                  href="#"
                   className={clsx("flex items-center gap-3", {
                     "text-primary": pathname === "/account",
                   })}
