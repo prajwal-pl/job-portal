@@ -24,10 +24,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { deleteJob, fetchUser } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
+import { SearchIcon } from "lucide-react";
 
 export function ExploreJobs() {
   const router = useRouter();
   const { toast } = useToast();
+  const [search, setSearch] = useState("");
   const [jobs, setJobs] = useState<any[]>([]);
   const [user, setUser] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -64,35 +66,6 @@ export function ExploreJobs() {
     }
     setLoading(false);
   };
-
-  const handleDelete = async ({ id }: any) => {
-    console.log(id);
-    // try {
-    //   const res = await axios.delete(
-    //     `http://localhost:8080/api/jobs/delete/${id}`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //       },
-    //     }
-    //   );
-    //   console.log(res);
-    //   if (axios.isAxiosError(res)) {
-    //     console.log(res?.response?.data?.message);
-    //   }
-    //   if (res.status === 200) {
-    //     toast({
-    //       title: "Job deleted successfully",
-    //       description: "You have been deleted successfully",
-    //     });
-    //     router.push("/browse");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
-
-  // const handleEdit = async ({ id }: any) => {
   //   try {
   //     const res = await axios.put(
   //       `http://localhost:8080/api/jobs/update/${id}`,
@@ -120,59 +93,76 @@ export function ExploreJobs() {
       <div className="flex-1 md:ml-20">
         <header className="bg-background border-b p-4 flex items-center gap-4">
           <div className="relative flex-1">
-            <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <div className="absolute flex items-center left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+              <SearchIcon />
+            </div>
             <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               type="search"
               placeholder="Search jobs..."
               className="w-full rounded-lg bg-background pl-8"
             />
           </div>
         </header>
-        <main className="mt-0 p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {jobs.map((job) => (
-              <Card key={job?.id}>
-                <CardHeader>
-                  <CardTitle>{job.title}</CardTitle>
-                  <CardDescription>{user?.name}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="line-clamp-3">{job.description}</p>
-                </CardContent>
-                <CardFooter>
-                  <div className="flex flex-col gap-2 items-center">
-                    <span className="text-sm text-muted-foreground">
-                      Posted {formatDistanceToNow(new Date(job.createdAt))} ago
-                    </span>
-                    <div className="flex items-center gap-2 w-full">
-                      <Link
-                        href={`/application/${job.id}`}
-                        className="text-sm "
-                      >
-                        <Button variant="outline" size="sm">
-                          Apply
-                        </Button>
-                      </Link>
-                      {(user?.role === "COMPANY" || user?.role === "ADMIN") &&
-                      job.userId === user?.id ? (
-                        <>
-                          <Button
-                            onClick={() => deleteJob(job?.id)}
-                            variant="destructive"
-                            size="sm"
-                          >
-                            Delete
+        <main className="mt-0 p-6 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {jobs
+              .filter((job) => {
+                return search.toLowerCase() === ""
+                  ? job
+                  : job.title
+                      .toLowerCase()
+                      .includes(
+                        search.toLowerCase() || job.description.toLowerCase()
+                      );
+              })
+              .map((job) => (
+                <Card key={job?.id}>
+                  <CardHeader>
+                    <CardTitle>{job.title}</CardTitle>
+                    <CardDescription>{user?.name}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="line-clamp-3">{job.description}</p>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex flex-col gap-2 items-center">
+                      <span className="text-sm text-muted-foreground">
+                        Posted {formatDistanceToNow(new Date(job.createdAt))}{" "}
+                        ago
+                      </span>
+                      <div className="flex items-center gap-2 w-full">
+                        <Link
+                          href={`/application/${job.id}`}
+                          className="text-sm "
+                        >
+                          <Button variant="outline" size="sm">
+                            Apply
                           </Button>
-                          <Button variant="default" size="sm">
-                            Edit
-                          </Button>
-                        </>
-                      ) : null}
+                        </Link>
+                        {(user?.role === "COMPANY" || user?.role === "ADMIN") &&
+                        job.userId === user?.id ? (
+                          <>
+                            <Button
+                              onClick={() => deleteJob(job?.id)}
+                              variant="destructive"
+                              size="sm"
+                            >
+                              Delete
+                            </Button>
+                            <Link href={`/edit/${job.id}`}>
+                              <Button variant="default" size="sm">
+                                Edit
+                              </Button>
+                            </Link>
+                          </>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                </CardFooter>
-              </Card>
-            ))}
+                  </CardFooter>
+                </Card>
+              ))}
           </div>
         </main>
         <div className="flex justify-center mt-6 mb-8">

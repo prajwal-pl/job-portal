@@ -60,3 +60,31 @@ export const deleteJob = async (id: string) => {
     console.log(error);
   }
 };
+
+export const updateJob = async (id: string, data: any) => {
+  try {
+    console.log(id);
+    const res = await axios.put(
+      `http://localhost:8080/api/jobs/update/${id}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(res);
+    if (axios.isAxiosError(res)) {
+      console.log(res?.response?.data?.message);
+    }
+    if (res.status === 200) {
+      // toast({
+      //   title: "Job deleted successfully",
+      //   description: "You have been deleted successfully",
+      // });
+      window.location.href = "/browse";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

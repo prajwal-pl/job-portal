@@ -10,19 +10,6 @@ export function Home() {
           <span className="text-xl font-bold">Job Portal</span>
         </Link>
         <nav className="flex items-center gap-4">
-          <Link href="#" className="hover:underline" prefetch={false}>
-            Employers
-          </Link>
-          <Link href="#" className="hover:underline" prefetch={false}>
-            Candidates
-          </Link>
-          <Link href="#" className="hover:underline" prefetch={false}>
-            Pricing
-          </Link>
-          <Link href="#" className="hover:underline" prefetch={false}>
-            Contact
-          </Link>
-          {/* <Button variant="secondary">Sign In</Button> */}
           <Button variant="secondary">Sign Up</Button>
         </nav>
       </header>
@@ -42,7 +29,6 @@ export function Home() {
                   <Link href="/browse" className="hover:underline">
                     <Button variant={"secondary"}>Browse Jobs</Button>
                   </Link>
-                  <Button variant={"default"}>Learn More</Button>
                 </div>
               </div>
               <div className="flex justify-center items-center">

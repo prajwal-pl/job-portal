@@ -103,34 +103,35 @@ export function Sidebar() {
           <span>Jobs</span>
         </Link>
         {user?.role === "ADMIN" || user?.role === "COMPANY" ? (
-          <Link
-            href="/new"
-            className={clsx(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground",
-              {
-                "text-primary": pathname === "/new",
-              }
-            )}
-            prefetch={false}
-          >
-            <Plus className="w-5 h-5" />
-            <span>Add Job</span>
-          </Link>
+          <>
+            <Link
+              href="/new"
+              className={clsx(
+                "flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground",
+                {
+                  "text-primary": pathname === "/new",
+                }
+              )}
+              prefetch={false}
+            >
+              <Plus className="w-5 h-5" />
+              <span>Add Job</span>
+            </Link>
+            <Link
+              href="/application"
+              className={clsx(
+                "flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground",
+                {
+                  "text-primary": pathname === "/application",
+                }
+              )}
+              prefetch={false}
+            >
+              <Briefcase className="w-5 h-5" />
+              <span>Applications</span>
+            </Link>
+          </>
         ) : null}
-
-        <Link
-          href="/application"
-          className={clsx(
-            "flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground",
-            {
-              "text-primary": pathname === "/application",
-            }
-          )}
-          prefetch={false}
-        >
-          <Briefcase className="w-5 h-5" />
-          <span>Applications</span>
-        </Link>
 
         <Dialog>
           <DialogTrigger asChild>
@@ -211,31 +212,33 @@ export function Sidebar() {
                 </Link>
               </DropdownMenuItem>
               {user?.role === "ADMIN" || user?.role === "COMPANY" ? (
-                <DropdownMenuItem>
-                  <Link
-                    href="/new"
-                    className={clsx("flex items-center gap-3", {
-                      "text-primary": pathname === "/new",
-                    })}
-                    prefetch={false}
-                  >
-                    <Plus className="w-5 h-5" />
-                    <span>Add Job</span>
-                  </Link>
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem>
+                    <Link
+                      href="/new"
+                      className={clsx("flex items-center gap-3", {
+                        "text-primary": pathname === "/new",
+                      })}
+                      prefetch={false}
+                    >
+                      <Plus className="w-5 h-5" />
+                      <span>Add Job</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href="/application"
+                      className={clsx("flex items-center gap-3", {
+                        "text-primary": pathname === "/application",
+                      })}
+                      prefetch={false}
+                    >
+                      <Briefcase className="w-5 h-5" />
+                      <span>Applications</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </>
               ) : null}
-              <DropdownMenuItem>
-                <Link
-                  href="/application"
-                  className={clsx("flex items-center gap-3", {
-                    "text-primary": pathname === "/application",
-                  })}
-                  prefetch={false}
-                >
-                  <Briefcase className="w-5 h-5" />
-                  <span>Applications</span>
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link
                   href="#"

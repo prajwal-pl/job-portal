@@ -13,7 +13,6 @@ function Page({ params }: Props) {
   const { id } = params;
   const [job, setJob] = useState<any>();
   const [user, setUser] = useState<any>();
-  const [loading, setLoading] = useState(false);
   const jobs = async () => {
     const res = await axios.get(`http://localhost:8080/api/jobs/${id}`, {
       headers: {

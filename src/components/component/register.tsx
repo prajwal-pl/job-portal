@@ -13,6 +13,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function Register() {
   const { toast } = useToast();
@@ -79,6 +80,12 @@ export function Register() {
             <Button type="submit" className="w-full">
               Register
             </Button>
+            <p>
+              Already have an account?{" "}
+              <Link className="text-blue-500" href="/login">
+                Login
+              </Link>
+            </p>
           </form>
         </CardContent>
       </Card>
