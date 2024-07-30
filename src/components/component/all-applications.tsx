@@ -16,7 +16,8 @@ import { useToast } from "../ui/use-toast";
 export function AllApplications() {
   const { toast } = useToast();
   const [applications, setApplications] = useState<any[]>([]);
-  const userId = localStorage.getItem("id");
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("id") || "" : "";
   const getApplications = async () => {
     try {
       const res = await axios.get(

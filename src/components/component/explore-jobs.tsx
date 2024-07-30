@@ -11,14 +11,6 @@ import {
 } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationLink,
-  PaginationNext,
-} from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -66,23 +58,6 @@ export function ExploreJobs() {
     }
     setLoading(false);
   };
-  //   try {
-  //     const res = await axios.put(
-  //       `http://localhost:8080/api/jobs/update/${id}`,
-  //       {
-  //         title: "Software Engineer",
-  //         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //         salary: 50000,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(res);
-  //     if (axios.isAxiosError(res)) {
-  //       console.log(res?.response?.data?.message);
 
   useEffect(() => {
     fetchJobs();
@@ -165,29 +140,6 @@ export function ExploreJobs() {
               ))}
           </div>
         </main>
-        <div className="flex justify-center mt-6 mb-8">
-          {/* <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination> */}
-        </div>
       </div>
     </div>
   );
