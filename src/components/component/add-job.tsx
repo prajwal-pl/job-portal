@@ -41,7 +41,7 @@ export function AddJob() {
     e.preventDefault();
     setLoading(true);
     const res = await axios.post(
-      "http://localhost:8080/api/jobs/new",
+      "https://job-portal-backend-u1w8.onrender.com/api/jobs/new",
       {
         title: job.title,
         salary: job.salary,

@@ -28,11 +28,14 @@ export function Register() {
     try {
       e.preventDefault();
       console.log(input);
-      const res = await axios.post("http://localhost:8080/api/auth/register", {
-        name: input.name,
-        email: input.email,
-        password: input.password,
-      });
+      const res = await axios.post(
+        "https://job-portal-backend-u1w8.onrender.com/api/auth/register",
+        {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+        }
+      );
       if (res.status === 201) {
         toast({
           title: "Registered successfully",

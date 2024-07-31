@@ -44,7 +44,7 @@ export function Sidebar() {
   const handleClick = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/auth/logout",
+        "https://job-portal-backend-u1w8.onrender.com/api/auth/logout",
         {},
         {
           headers: {

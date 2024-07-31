@@ -21,7 +21,7 @@ export function AllApplications() {
   const getApplications = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8080/api/applications/${userId}`,
+        `https://job-portal-backend-u1w8.onrender.com/api/applications/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -18,7 +18,7 @@ export function ApplicantDetails({ id }: { id: string }) {
   const getApplication = async () => {
     setLoading(true);
     const res = await axios.get(
-      `http://localhost:8080/api/applications/application/${id}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/applications/application/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -36,7 +36,7 @@ export function ApplicantDetails({ id }: { id: string }) {
     setApplication(res.data?.application);
 
     const resJob = await axios.get(
-      `http://localhost:8080/api/jobs/${res.data.application.jobId}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/jobs/${res.data.application.jobId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -53,7 +53,7 @@ export function ApplicantDetails({ id }: { id: string }) {
     }
     setJob(resJob.data.job);
     const resUser = await axios.get(
-      `http://localhost:8080/api/auth/user/${res.data.application.userId}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/auth/user/${res.data.application.userId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,7 +67,7 @@ export function ApplicantDetails({ id }: { id: string }) {
 
   const handleReject = async () => {
     const res = await axios.delete(
-      `http://localhost:8080/api/applications/${id}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/applications/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -90,7 +90,7 @@ export function ApplicantDetails({ id }: { id: string }) {
   const handleSchedule = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8080/api/applications/${id}/schedule`,
+        `https://job-portal-backend-u1w8.onrender.com/api/applications/${id}/schedule`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -19,7 +19,7 @@ export function ApplyNow({ job, user }: { job: any; user: any }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await axios.post(
-      `http://localhost:8080/api/applications/new/${job?.id}`,
+      `/api/applications/new/${job?.id}`,
       {
         CV: files.cv,
         resume: files.resume,

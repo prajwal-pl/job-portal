@@ -11,7 +11,9 @@ export function cn(...inputs: ClassValue[]) {
 export const fetchUser = async () => {
   try {
     const res = await axios.get(
-      `http://localhost:8080/api/auth/${localStorage.getItem("id")}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/auth/${localStorage.getItem(
+        "id"
+      )}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -38,7 +40,7 @@ export const deleteJob = async (id: string) => {
   try {
     console.log(id);
     const res = await axios.delete(
-      `http://localhost:8080/api/jobs/delete/${id}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/jobs/delete/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -65,7 +67,7 @@ export const updateJob = async (id: string, data: any) => {
   try {
     console.log(id);
     const res = await axios.put(
-      `http://localhost:8080/api/jobs/update/${id}`,
+      `https://job-portal-backend-u1w8.onrender.com/api/jobs/update/${id}`,
       data,
       {
         headers: {

@@ -15,7 +15,7 @@ export function ChooseRole() {
   const handleClick = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/auth/update-role/${userId}`,
+        `https://job-portal-backend-u1w8.onrender.com/api/auth/update-role/${userId}`,
         {
           role: selectedOption,
         },

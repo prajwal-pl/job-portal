@@ -27,10 +27,13 @@ export function Login() {
     try {
       e.preventDefault();
       console.log(input);
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
-        email: input.email,
-        password: input.password,
-      });
+      const res = await axios.post(
+        "https://job-portal-backend-u1w8.onrender.com/api/auth/login",
+        {
+          email: input.email,
+          password: input.password,
+        }
+      );
       const data = res.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("id", JSON.stringify(data.user.id));

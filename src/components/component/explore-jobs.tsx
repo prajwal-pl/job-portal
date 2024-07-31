@@ -28,11 +28,14 @@ export function ExploreJobs() {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/jobs", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.get(
+        "https://job-portal-backend-u1w8.onrender.com/api/jobs",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       console.log(res.data.data);
       if (axios.isAxiosError(res)) {
         console.log(res?.response?.data?.message);
