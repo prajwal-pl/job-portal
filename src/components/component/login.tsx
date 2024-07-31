@@ -24,21 +24,29 @@ export function Login() {
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(input);
-    const res = await axios.post("http://localhost:8080/api/auth/login", {
-      email: input.email,
-      password: input.password,
-    });
-    const data = res.data;
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("id", JSON.stringify(data.user.id));
-    if (res.status === 200) {
-      toast({
-        title: "Logged in successfully",
-        description: "You can now access your account",
+    try {
+      e.preventDefault();
+      console.log(input);
+      const res = await axios.post("http://localhost:8080/api/auth/login", {
+        email: input.email,
+        password: input.password,
       });
-      router.push("/role");
+      const data = res.data;
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("id", JSON.stringify(data.user.id));
+      if (res.status === 200) {
+        toast({
+          title: "Logged in successfully",
+          description: "You can now access your account",
+        });
+        router.push("/browse");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Invalid email or password",
+      });
     }
   };
   return (
@@ -78,7 +86,7 @@ export function Login() {
               Sign In
             </Button>
             <p>
-              Don't have an account?{" "}
+              {"Don't"} have an account?{" "}
               <Link className="text-blue-500" href="/register">
                 Register
               </Link>

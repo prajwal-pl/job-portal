@@ -16,7 +16,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { deleteJob, fetchUser } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
-import { SearchIcon } from "lucide-react";
+import { Loader, SearchIcon } from "lucide-react";
 
 export function ExploreJobs() {
   const router = useRouter();
@@ -33,6 +33,7 @@ export function ExploreJobs() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      console.log(res.data.data);
       if (axios.isAxiosError(res)) {
         console.log(res?.response?.data?.message);
         return router.push("/login");
@@ -52,9 +53,12 @@ export function ExploreJobs() {
     const res = await fetchUser();
     if (res) {
       setUser(res);
-      console.log(user);
+      // console.log(user);
     } else {
       console.log("User role is undefined");
+    }
+    if (!res.role) {
+      router.push("/role");
     }
     setLoading(false);
   };
@@ -63,6 +67,11 @@ export function ExploreJobs() {
     fetchJobs();
     getUser();
   }, []);
+
+  if (loading) {
+    return <Loader className="h-30 w-30 animate-spin" />;
+  }
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-background mt-4 md:mt-0">
       <div className="flex-1 md:ml-20">
@@ -96,7 +105,7 @@ export function ExploreJobs() {
                 <Card key={job?.id}>
                   <CardHeader>
                     <CardTitle>{job.title}</CardTitle>
-                    <CardDescription>{user?.name}</CardDescription>
+                    <CardDescription>{job.User?.name}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="line-clamp-3">{job.description}</p>

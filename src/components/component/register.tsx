@@ -25,19 +25,27 @@ export function Register() {
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(input);
-    const res = await axios.post("http://localhost:8080/api/auth/register", {
-      name: input.name,
-      email: input.email,
-      password: input.password,
-    });
-    if (res.status === 201) {
-      toast({
-        title: "Registered successfully",
-        description: "You can now login",
+    try {
+      e.preventDefault();
+      console.log(input);
+      const res = await axios.post("http://localhost:8080/api/auth/register", {
+        name: input.name,
+        email: input.email,
+        password: input.password,
       });
-      router.push("/login");
+      if (res.status === 201) {
+        toast({
+          title: "Registered successfully",
+          description: "You can now login",
+        });
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+      });
     }
   };
   return (
@@ -51,7 +59,13 @@ export function Register() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Enter your name" required />
+              <Input
+                value={input.name}
+                onChange={(e) => setInput({ ...input, name: e.target.value })}
+                id="name"
+                placeholder="Enter your name"
+                required
+              />
             </div>
             <div>
               <Label htmlFor="email">Email</Label>

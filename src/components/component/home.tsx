@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import exploreJobs from "../../../public/explore-jobs.png";
+import aiJobs from "../../../public/ai-job.png";
+import interviewSchedule from "../../../public/interview-schedule.png";
+import candidateShortlisting from "../../../public/board.png";
 
 export function Home() {
   return (
@@ -10,7 +14,9 @@ export function Home() {
           <span className="text-xl font-bold">Job Portal</span>
         </Link>
         <nav className="flex items-center gap-4">
-          <Button variant="secondary">Sign Up</Button>
+          <Link href="/register" className="hover:underline">
+            <Button variant="secondary">Sign Up</Button>
+          </Link>
         </nav>
       </header>
       <main className="flex-1 mt-[50px]">
@@ -33,7 +39,7 @@ export function Home() {
               </div>
               <div className="flex justify-center items-center">
                 <img
-                  src="/placeholder.svg"
+                  src={exploreJobs.src}
                   width="500"
                   height="500"
                   alt="Job Search"
@@ -48,7 +54,7 @@ export function Home() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex justify-center">
                 <img
-                  src="/placeholder.svg"
+                  src={aiJobs.src}
                   width="500"
                   height="500"
                   alt="AI Job Uploads"
@@ -65,7 +71,9 @@ export function Home() {
                   and manage the entire hiring workflow.
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <Button>Get Started</Button>
+                  <Link href="/register" className="">
+                    <Button>Get Started</Button>
+                  </Link>
                   <Button variant="outline">Learn More</Button>
                 </div>
               </div>
@@ -85,13 +93,15 @@ export function Home() {
                   it easy to manage the entire hiring process.
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <Button>Schedule Interview</Button>
+                  <Link href="/register">
+                    <Button>Schedule Interview</Button>
+                  </Link>
                   <Button variant="outline">Learn More</Button>
                 </div>
               </div>
               <div className="flex justify-center">
                 <img
-                  src="/placeholder.svg"
+                  src={interviewSchedule.src}
                   width="500"
                   height="500"
                   alt="Candidate Shortlisting"
@@ -106,7 +116,7 @@ export function Home() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex justify-center">
                 <img
-                  src="/placeholder.svg"
+                  src={candidateShortlisting.src}
                   width="500"
                   height="500"
                   alt="Job Management"
@@ -122,7 +132,9 @@ export function Home() {
                   hiring decisions with our powerful job management tools.
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <Button>Get Started</Button>
+                  <Link href="/register">
+                    <Button>Get Started</Button>
+                  </Link>{" "}
                   <Button variant="outline">Learn More</Button>
                 </div>
               </div>

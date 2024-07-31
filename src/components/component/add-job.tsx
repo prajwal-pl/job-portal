@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { fetchUser } from "@/lib/utils";
 import axios from "axios";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 
 export function AddJob() {
   const [user, setUser] = useState<any>();
@@ -132,7 +133,9 @@ export function AddJob() {
                 "Save Job"
               )}
             </Button>
-            <Button variant="outline">Use AI</Button>
+            <Link href="/ai-job">
+              <Button variant="outline">Use AI</Button>
+            </Link>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between"></CardFooter>
