@@ -11,7 +11,8 @@ export function ChooseRole() {
   const router = useRouter();
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState("COMPANY");
-  const userId = localStorage.getItem("id");
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("id") || "" : "";
   const handleClick = async () => {
     try {
       const res = await axios.post(
