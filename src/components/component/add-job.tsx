@@ -94,7 +94,9 @@ export function AddJob() {
                 <Label htmlFor="salary">Salary</Label>
                 <Input
                   value={job.salary}
-                  onChange={(e) => setJob({ ...job, salary: e.target.value })}
+                  onChange={(e) =>
+                    setJob({ ...job, salary: Number(e.target.value) })
+                  }
                   id="salary"
                   type="number"
                   placeholder="Enter salary"
