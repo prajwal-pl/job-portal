@@ -97,7 +97,7 @@ const Page = ({ params }: Props) => {
                   value={job.type}
                   onChange={(e) => setJob({ ...job, type: e.target.value })}
                   id="salary"
-                  type="number"
+                  type="text"
                   placeholder="Enter Onsite or Remote"
                 />
               </div>
