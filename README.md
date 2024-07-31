@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Job Portal - Detailed Overview
 
-## Getting Started
+# Tech Stack
 
-First, run the development server:
+Next.js
+Tailwind CSS
+Node.js
+Express.js
+MongoDB
+Prisma
+NodeMailer
+JWT
+UploadThing
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Workflow
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There exists rolebased access in this application. Once the user reaches the webpage, they are supposed to register and login upon which they are redirected to a role page where they have to choose whether they're company or a candidate. Each of them have a different interface. This is achieved using persisting a role field in the database. And if they do not have a role, they're redirected to the role page to choose one.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The design and the UI is built using Next.js, React.js and Tailwind CSS. The server side logic and routing is built using Next whereas all the components are designed using React and tailwind.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Node.js and Express are used for building the server, where each server route is organised and configured in different files. The Frontend makes the request to the backend to fetch, create, update or delete data. Axios is used for making requests and rendering responses seamlessly.
 
-## Learn More
+Once the user is logged in, the userId from the database and the user email is stored in the localstorage for further access. These values are used for making requests to the backend, for example the localstorage id maybe fetched to dynamically get included in the request as params to get a specific job created by the user.
 
-To learn more about Next.js, take a look at the following resources:
+Each candidate can apply for a job, by submitting their CV and the resume, all the other details are autofilled by the data from the database, which creates smooth and quick user experience. Each company can post job listings, and also use AI to create job listings which is still under maintainence.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The UI is totally mobile responsive, and has real time toast notifications upon each action the user/company owner performs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The app also has a applications table which the company can access can utilise to view all the applications. All the data is pulled up from the database and it redirects to a new page where all the details of the application is listed.
 
-## Deploy on Vercel
+The company can also schedule interview which sends a mail to the applicant or reject the application which removes the application from the database. The company can perform CRUD operations of the job listing.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The user can also search for all the jobs by using the search bar under the jobs tab.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The video output of the application:
+https://www.loom.com/share/63010e7ac8ee466cbfc763d7820b55ad
