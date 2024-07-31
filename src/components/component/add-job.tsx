@@ -22,7 +22,7 @@ export function AddJob() {
   const [user, setUser] = useState<any>();
   const [job, setJob] = useState<any>({
     title: "",
-    salary: 0,
+    type: "",
     location: "",
     description: "",
   });
@@ -44,7 +44,7 @@ export function AddJob() {
       "https://job-portal-backend-u1w8.onrender.com/api/jobs/new",
       {
         title: job.title,
-        salary: job.salary,
+        type: job.type,
         location: job.location,
         description: job.description,
         userId: user.id,
@@ -91,15 +91,13 @@ export function AddJob() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="salary">Salary</Label>
+                <Label htmlFor="salary">Type</Label>
                 <Input
-                  value={job.salary}
-                  onChange={(e) =>
-                    setJob({ ...job, salary: Number(e.target.value) })
-                  }
+                  value={job.type}
+                  onChange={(e) => setJob({ ...job, type: e.target.value })}
                   id="salary"
                   type="number"
-                  placeholder="Enter salary"
+                  placeholder="Enter Onsite or Remote"
                 />
               </div>
               <div className="space-y-2">

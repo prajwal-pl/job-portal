@@ -48,7 +48,7 @@ const Page = ({ params }: Props) => {
 
   const [job, setJob] = useState<any>({
     title: "",
-    salary: 0,
+    type: "",
     location: "",
     description: "",
   });
@@ -92,15 +92,13 @@ const Page = ({ params }: Props) => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="salary">Salary</Label>
+                <Label htmlFor="salary">Type</Label>
                 <Input
-                  value={job.salary}
-                  onChange={(e) =>
-                    setJob({ ...job, salary: Number(e.target.value) })
-                  }
+                  value={job.type}
+                  onChange={(e) => setJob({ ...job, type: e.target.value })}
                   id="salary"
                   type="number"
-                  placeholder="Enter salary"
+                  placeholder="Enter Onsite or Remote"
                 />
               </div>
               <div className="space-y-2">
